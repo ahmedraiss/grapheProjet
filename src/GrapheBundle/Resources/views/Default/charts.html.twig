@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script>
+        window.onload = function () {
+
+            var datajson = [];
+
+
+            var chart = new CanvasJS.Chart("chartContainer", {
+                animationEnabled: true,
+
+                title:{
+                    text:"Number contry by continent"
+                },
+                axisX:{
+                    interval: 1
+                },
+                axisY2:{
+                    interlacedColor: "rgba(1,77,101,.2)",
+                    gridColor: "rgba(1,77,101,.1)",
+                    title: "Number of Companies"
+                },
+                data: [{
+                    type: "bar",
+                    name: "companies",
+                    axisYType: "secondary",
+                    dataPoints: datajson,
+                }]
+            });
+            $.getJSON("file2.json", function(data) {
+                $.each(data, function(key, value){
+                    datajson.push({ y: parseInt(value.s),label: value.continent});
+                });
+                chart.render();
+            });
+
+            console.log(datajson);
+
+
+
+        }
+    </script>
+</head>
+<body>
+<div id="chartContainer" style="height: 370px; max-width: 920px; margin: 0px auto;"></div>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,118 @@
+<html>
+<head></head>
+<body>
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+</style>
+<h2>HTML Table</h2>
+
+<table>
+
+    <tr>
+        <th>Continent</th>
+        <th>population</th>
+    </tr>
+
+    {#{% for c in populations %}
+    <tr>
+        <th>{{c.continent}}</th>
+        <th>{{c.s}}</th>
+    </tr>
+{% else%}
+    <tr>
+        <th>rien a trouve!!</th>
+    </tr>
+    {% endfor%}#}
+
+</table>
+<div id="pieChart"></div>
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script>
+
+    //var scene={};
+    /*  $( document ).ready(function() {
+
+     var json = $.getJSON('file.json', function(data) {
+     return data;
+     });
+     console.log(json);
+
+     var dataJson = [];
+
+     var request = new XMLHttpRequest();
+     request.open("GET", "file.json", false);
+     request.send(null)
+     var my_JSON_object = JSON.parse(request.responseText);
+     $.each(my_JSON_object, function(key, val) {
+
+     //console.log(val.continent);
+     //console.log(val.s);
+
+     });
+
+
+     //var pie = new d3pie("mypie", { });
+     });*/
+
+
+</script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/d3/4.7.2/d3.min.js"></script>
+<script src="js/d3pie.min.js"></script>
+<script>
+
+    var data = [];
+
+    d3.json("file.json", function(error, json) {
+
+        $.each(json, function(d,i){
+
+            data.push({
+
+                'label': i.continent,
+
+                'value': parseInt(i.s)
+
+            })
+
+        })
+
+
+
+        var pie = new d3pie("pieChart", {
+
+            "size": {
+                "canvasWidth": 590,
+                "pieOuterRadius": "90%"
+            },
+            "data": {
+
+                "content": data
+
+            }
+
+        });
+
+    });
+</script>
+
+</body>
+</html>
